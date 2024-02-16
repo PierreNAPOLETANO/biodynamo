@@ -31,6 +31,8 @@ std::string BoundaryTypeToString(const BoundaryConditionType& type) {
       return "closed";
     case BoundaryConditionType::kDirichlet:
       return "Dirichlet";
+    case BoundaryConditionType::kPeriodic:
+      return "Periodic";
     default:
       return "unknown";
   }
@@ -46,6 +48,8 @@ BoundaryConditionType StringToBoundaryType(const std::string& type) {
     return BoundaryConditionType::kClosedBoundaries;
   } else if (type == "Dirichlet") {
     return BoundaryConditionType::kDirichlet;
+  } else if (type == "Periodic") {
+    return BoundaryConditionType::kPeriodic;
   } else {
     Log::Fatal("StringToBoundaryType", "Unknown boundary type: ", type);
     return BoundaryConditionType::kNeumann;
@@ -137,6 +141,8 @@ void DiffusionGrid::Diffuse(real_t dt) {
     DiffuseWithDirichlet(dt);
   } else if (bc_type_ == BoundaryConditionType::kNeumann) {
     DiffuseWithNeumann(dt);
+  } else if (bc_type_ == BoundaryConditionType::kPeriodic) {
+    DiffuseWithPeriodic(dt);
   } else {
     Log::Error(
         "EulerGrid::Diffuse", "Boundary condition of type '",
