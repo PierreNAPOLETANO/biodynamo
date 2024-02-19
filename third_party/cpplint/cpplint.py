@@ -883,21 +883,11 @@ except NameError:
   #  -- pylint: disable=redefined-builtin
   long = int
 
-if sys.version_info < (3,):
-  #  -- pylint: disable=no-member
-  # BINARY_TYPE = str
-  itervalues = dict.itervalues
-  iteritems = dict.iteritems
-else:
-  # BINARY_TYPE = bytes
-  itervalues = dict.values
-  iteritems = dict.items
+itervalues = dict.itervalues if sys.version_info < (3,) else dict.values
+iteritems = dict.iteritems if sys.version_info < (3,) else dict.items
 
 def unicode_escape_decode(x):
-  if sys.version_info < (3,):
-    return codecs.unicode_escape_decode(x)[0]
-  else:
-    return x
+  return codecs.unicode_escape_decode(x)[0] sys.version_info < (3,) else x
 
 # Treat all headers starting with 'h' equally: .h, .hpp, .hxx etc.
 # This is set by --headers flag.
@@ -1520,10 +1510,7 @@ class _FunctionState(object):
     if not self.in_a_function:
       return
 
-    if Match(r'T(EST|est)', self.current_function):
-      base_trigger = self._TEST_TRIGGER
-    else:
-      base_trigger = self._NORMAL_TRIGGER
+    base_trigger = self._TEST_TRIGGER if Match(r'T(EST|est)', self.current_function) else base_trigger * 2**_VerboseLevel()
     trigger = base_trigger * 2**_VerboseLevel()
 
     if self.lines_in_function > trigger:
@@ -2253,10 +2240,7 @@ def GetIndentLevel(line):
     An integer count of leading spaces, possibly zero.
   """
   indent = Match(r'^( *)\S', line)
-  if indent:
-    return len(indent.group(1))
-  else:
-    return 0
+  return len(indent.group(1)) if indent else 0
 
 def PathSplitToList(path):
   """Returns the path split into a list by the separator.

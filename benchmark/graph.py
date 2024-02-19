@@ -38,15 +38,19 @@ def take_x(runtime):
         i += 1
     return i
 
+def get_soma_clustering():
+    match sys.argv[2]:
+        case "soma_clustering0":
+            return "soma_clustering: export=false"
+        case "soma_clustering1":
+            return "soma_clustering: export=true"
+        case "tumor_concept0":
+            return "tumor_concept: export=false"
+        case "tumor_concept1":
+            return "tumor_concept: export=true"
+
 def search_loop(i, x):
-    if sys.argv[2] == "soma_clustering0":
-        av = "soma_clustering: export=false"
-    if sys.argv[2] == "soma_clustering1":
-        av = "soma_clustering: export=true"
-    if sys.argv[2] == "tumor_concept0":
-        av = "tumor_concept: export=false"
-    if sys.argv[2] == "tumor_concept1":
-        av = "tumor_concept: export=true"
+    av = get_soma_clustering()
     demo = av
     runtime = open("runtime.txt")
     j = 0
@@ -63,14 +67,7 @@ def search_loop(i, x):
 
 # Take the Data Demo
 def take_demo_time(i, x):
-    if sys.argv[2] == "soma_clustering0":
-        av = "soma_clustering: export=false"
-    if sys.argv[2] == "soma_clustering1":
-        av = "soma_clustering: export=true"
-    if sys.argv[2] == "tumor_concept0":
-        av = "tumor_concept: export=false"
-    if sys.argv[2] == "tumor_concept1":
-        av = "tumor_concept: export=true"
+    av = get_soma_clustering()
     demo = av
     x = search_loop(i, x)
     runtime = open("runtime.txt")
@@ -98,14 +95,7 @@ def take_data_CPU(data_run, x):
 
 # How many times we used the script "my_bensh.sh"
 def nb_runtimes():
-    if sys.argv[2] == "soma_clustering0":
-        av = "soma_clustering: export=false"
-    if sys.argv[2] == "soma_clustering1":
-        av = "soma_clustering: export=true"
-    if sys.argv[2] == "tumor_concept0":
-        av = "tumor_concept: export=false"
-    if sys.argv[2] == "tumor_concept1":
-        av = "tumor_concept: export=true"
+    av = get_soma_clustering()
     demo = av
     runtime = open("runtime.txt")
     data = runtime.readline()

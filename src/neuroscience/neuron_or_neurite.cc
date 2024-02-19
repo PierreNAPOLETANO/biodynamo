@@ -33,11 +33,9 @@ AgentPointer<NeuronOrNeurite> NeuronOrNeurite::GetNeuronOrNeuriteAgentPtr()
 }
 
 StructureIdentifierSWC NeuronOrNeurite::GetIdentifierSWC() const {
-  if (IsNeuronSoma()) {
-    return StructureIdentifierSWC::kSoma;
-  } else {
-    return StructureIdentifierSWC::kApicalDendrite;
-  }
+  return IsNeuronSoma()
+    ? StructureIdentifierSWC::kSoma
+    : StructureIdentifierSWC::kApicalDendrite;
 };
 
 bool NeuronOrNeurite::IsNeuronSoma() const {
